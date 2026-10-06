@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>I'm Sorry ❤️</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    overflow: hidden;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+/* Floating hearts */
+
+.heart {
+    position: absolute;
+    bottom: -50px;
+    font-size: 25px;
+    animation: float 7s linear infinite;
+    opacity: 0.7;
+}
+
+.heart:nth-child(1) {
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.heart:nth-child(2) {
+    left: 25%;
+    animation-delay: 2s;
+}
+
+.heart:nth-child(3) {
+    left: 45%;
+    animation-delay: 4s;
+}
+
+.heart:nth-child(4) {
+    left: 65%;
+    animation-delay: 1s;
+}
+
+.heart:nth-child(5) {
+    left: 80%;
+    animation-delay: 3s;
+}
+
+.heart:nth-child(6) {
+    left: 90%;
+    animation-delay: 5s;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Envelope */
+
+.container {
+    text-align: center;
+    z-index: 10;
+}
+
+.envelope {
+    width: 280px;
+    height: 180px;
+    background: white;
+    position: relative;
+    margin: auto;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+    transition: 0.5s;
+}
+
+.envelope:hover {
+    transform: scale(1.05);
+}
+
+.flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-left: 140px solid transparent;
+    border-right: 140px solid transparent;
+    border-top: 100px solid #ff4f70;
+    transform-origin: top;
+    transition: 0.8s;
+    z-index: 3;
+}
+
+.letter {
+    position: absolute;
+    width: 230px;
+    height: 140px;
+    background: #fff5f7;
+    left: 25px;
+    top: 20px;
+    border-radius: 5px;
+    color: #e6395f;
+    padding: 30px 10px;
+    font-size: 22px;
+    font-weight: bold;
+    transition: 0.8s;
+    z-index: 1;
+}
+
+.envelope.open .flap {
+    transform: rotateX(180deg);
+}
+
+.envelope.open .letter {
+    transform: translateY(-110px);
+}
+
+.click-text {
+    margin-top: 35px;
+    font-size: 20px;
+    animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Main card */
+
+.card {
+    display: none;
+    width: 90%;
+    max-width: 600px;
+    max-height: 85vh;
+    overflow-y: auto;
+    background: rgba(255,255,255,0.96);
+    color: #555;
+    padding: 40px 30px;
+    border-radius: 25px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    animation: appear 1s ease;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.big-heart {
+    font-size: 85px;
+    animation: beat 1.2s infinite;
+}
+
+@keyframes beat {
+    0%,100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+h1 {
+    color: #e6395f;
+    font-size: 45px;
+    margin: 10px 0 25px;
+}
+
+.name {
+    color: #e6395f;
+    font-weight: bold;
+}
+
+.message {
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+button {
+    margin-top: 25px;
+    padding: 14px 30px;
+    border: none;
+    border-radius: 30px;
+    background: #e6395f;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.1);
+    background: #c9274b;
+}
+
+.hidden-message {
+    display: none;
+    margin-top: 25px;
+    color: #e6395f;
+    font-size: 19px;
+    line-height: 1.7;
+    animation: appear 1s ease;
+}
+
+.signature {
+    margin-top: 25px;
+    color: #999;
+    font-style: italic;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Floating hearts -->
+<div class="heart">❤️</div>
+<div class="heart">💗</div>
+<div class="heart">💕</div>
+<div class="heart">❤️</div>
+<div class="heart">💖</div>
+<div class="heart">💕</div>
+
+
+<!-- Envelope screen -->
+
+<div class="container" id="envelopeScreen">
+
+    <div class="envelope" id="envelope" onclick="openEnvelope()">
+
+        <div class="flap"></div>
+
+        <div class="letter">
+            A Little Message ❤️
+        </div>
+
+    </div>
+
+    <div class="click-text">
+        Tap the envelope 💌
+    </div>
+
+</div>
+
+
+<!-- Apology card -->
+
+<div class="card" id="card">
+
+    <div class="big-heart">
+        ❤️
+    </div>
+
+    <h1>I'm Sorry</h1>
+
+    <div class="message">
+
+        To my <span class="name">special person</span>... ❤️
+
+        <br><br>
+
+        I just wanted to say something honestly.
+
+        <br><br>
+
+        I never wanted to hurt you or make you angry.
+        I was only trying to prank you, and I honestly
+        didn't think it would hurt or bother you.
+
+        <br><br>
+
+        But if my prank hurt you or made you feel bad,
+        <strong>I'm really sorry. ❤️</strong>
+
+        <br><br>
+
+        I didn't mean it that way at all.
+
+        <br><br>
+
+        I hope you know that there was never
+        any bad intention behind it.
+
+        <br><br>
+
+        You are always special to me,
+        and I really don't want a silly prank
+        to become a reason for you to feel bad.
+
+        <br><br>
+
+        <strong>I'm genuinely sorry. ❤️</strong>
+
+    </div>
+
+
+    <button onclick="showMessage()">
+        One More Thing 💌
+    </button>
+
+
+    <div class="hidden-message" id="hiddenMessage">
+
+        I was just being silly and trying to have
+        some fun. 😅
+
+        <br><br>
+
+        But your feelings matter to me,
+        and I'm sorry if I crossed the line.
+
+        <br><br>
+
+        <strong>
+            You will always be special to me. ❤️
+        </strong>
+
+        <div class="signature">
+            — From someone who genuinely cares
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function openEnvelope() {
+
+    const envelope = document.getElementById("envelope");
+
+    envelope.classList.add("open");
+
+    setTimeout(function() {
+
+        document.getElementById("envelopeScreen").style.display = "none";
+
+        document.getElementById("card").style.display = "block";
+
+    }, 1200);
+}
+
+
+function showMessage() {
+
+    document.getElementById("hiddenMessage").style.display = "block";
+
+}
+
+</script>
+
+</body>
+</html>
